@@ -1,0 +1,690 @@
+Start:
+lui $7, 0x4000     #print background
+addi $10, $0, 4800
+addi $8,  $0, 0
+lui $9, 0x001c
+addi $9, $9, 0x1c7f
+
+Background:
+beq $8, $10, PrintData
+sw  $9, 0($7)
+addi $7, $7, 1
+addi $8, $8, 1
+j Background
+
+PrintData:
+
+lui $7, 0x4000
+addi $10,$0,0
+addi $8, $0, 240 
+lui $9, 0x00ff
+addi $9, $9, 0xff7f # background to output data
+Data:
+beq $10, $8, Print
+sw  $9, 0($7)
+addi $7, $7, 1
+addi $10, $10, 1
+j   Data
+
+Print:
+lui  $6, 0x00ff
+addi $6, $6, 0x0000  #black data
+
+lui $5, 0x4000        #print Level       
+addi $4, $6, 0x4c                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x65
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x76
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x65
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x6c
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x3a
+sw   $4, 0($5)
+
+lui  $5, 0x4000
+addi $5, $5, 80    #print Score    53 63 6f 72 65 3a
+addi $4, $6, 0x53                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x63                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x6f                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x72                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x65                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x3a                 
+sw   $4, 0($5)
+
+lui  $5, 0x4000
+addi $5, $5, 160    #print Time    54 69 6d 65
+addi $4, $6, 0x54                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x69                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x6d                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x65                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x3a                 
+sw   $4, 0($5)
+
+lui  $5, 0x4000
+lui  $6, 0x4000  
+addi $6, $6, 3440
+addi $5, $5, 3200       #print bar
+lui  $4, 0x0003
+addi $4, $0, 0x037f
+Bar:
+sw   $4, 0($5)
+addi $5, $5, 1
+beq  $5, $6, Initialization
+j    Bar  
+
+
+Initialization:
+addi $2, $0, 1
+addi $5, $2, 5
+addi $8, $0, 0
+addi $9, $0, 0
+lui  $27, 0xe000  
+addi $28, $0, 60
+sw   $28,  0($27)
+
+PrintLevel:
+addi $1, $0, 0
+add $28, $0, $2
+addi $3, $0, 10
+LevelCount:
+sub $28, $28, $3
+slt $29, $28, $0
+beq $29, $0, Carry
+addi $28, $28, 10
+addi $1, $1, 0x30
+addi $28, $28, 0x30
+lui $4, 0x4000
+addi $4, $4, 7
+lui  $29, 0x00ff
+add  $1, $1, $29
+sw $1, 0($4)
+addi $4, $4, 1
+add  $28, $28, $29
+sw $28, 0($4)
+j ScoreCount
+
+Carry:
+addi $1, $1, 1
+j LevelCount
+
+Random:
+lui $1, 0xc000
+lui $4, 0x4000
+addi $4, $4, 3288
+addi $3, $0, 0
+
+Num:
+addi $8, $8, 1
+beq  $8, $5, Level_up
+addi $30, $0, 1
+lw  $10, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $11, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $12, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $13, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $14, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $15, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $16, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $17, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $18, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $19, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $20, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $21, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $22, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $23, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $24, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+lw  $25, 0($1)
+addi $3, $3, 1
+beq $3, $2, Letter
+
+
+Letter:
+addi $3, $0, 0
+Now:
+beq $3, $2, Check
+addi $7, $0, 0xff00
+addi $27, $0, 0
+beq  $3, $27, zero
+addi $27, $0, 1
+beq  $3, $27, one
+addi $27, $0, 2
+beq  $3, $27, two
+addi $27, $0, 3
+beq  $3, $27, three
+addi $27, $0, 4
+beq  $3, $27, four
+addi $27, $0, 5
+beq  $3, $27, five
+addi $27, $0, 6
+beq  $3, $27, six
+addi $27, $0, 7
+beq  $3, $27, seven 
+addi $27, $0, 8
+beq  $3, $27, eight
+addi $27, $0, 9
+beq  $3, $27, nine
+addi $27, $0, 10
+beq  $3, $27, ten
+addi $27, $0, 11
+beq  $3, $27, eleven
+addi $27, $0, 12
+beq  $3, $27, twelve
+addi $27, $0, 13
+beq  $3, $27, thirteen
+addi $27, $0, 14
+beq  $3, $27, fourteen
+addi $27, $0, 15
+beq  $3, $27, fifteen
+
+zero:
+add $26, $0, $10
+j Change
+one:
+add $26, $0, $11
+j Change
+two:
+add $26, $0, $12
+j Change
+three:
+add $26, $0, $13
+j Change
+four:
+add $26, $0, $14
+j Change
+five:
+add $26, $0, $15
+j Change
+six:
+add $26, $0, $16
+j Change
+seven:
+add $26, $0, $17
+j Change
+eight:
+add $26, $0, $18
+j Change
+nine:
+add $26, $0, $19
+j Change
+ten:
+add $26, $0, $20
+j Change
+eleven:
+add $26, $0, $21
+j Change
+twelve:
+add $26, $0, $22
+j Change
+thirteen:
+add $26, $0, $23
+j Change
+fourteen:
+add $26, $0, $24
+j Change
+fifteen:
+add $26, $0, $25
+j Change
+
+Change:
+beq $30, $0, YesOrNo
+Put:
+lui $27, 0x0003
+addi $6, $0, 0
+beq $26, $6, W
+addi $6, $0, 1
+beq $26, $6, S
+addi $6, $0, 2
+beq $26, $6, A
+addi $6, $0, 3
+beq $26, $6, D
+
+W:
+addi $3, $3, 1
+addi $7, $7, 0x57
+add $7, $7, $27
+sw $7, 0($4)
+addi $4, $4, 2
+beq $30, $0, Get
+j Now
+S:
+addi $3, $3, 1
+addi $7, $7, 0x53
+add $7, $7, $27
+sw $7, 0($4)
+addi $4, $4, 2
+beq $30, $0, Get
+j Now
+A:
+addi $3, $3, 1
+addi $7, $7, 0x41
+add $7, $7, $27
+sw $7, 0($4)
+addi $4, $4, 2
+beq $30, $0, Get
+j Now
+D:
+addi $3, $3, 1
+addi $7, $7, 0x44
+add $7, $7, $27
+sw $7, 0($4)
+addi $4, $4, 2
+beq $30, $0, Get
+j Now
+
+
+
+
+
+PrintScore:
+add  $9, $9, $2
+ScoreCount:
+addi $27, $0, 10
+addi $29, $0, 0
+addi $6, $0, 0
+addi $7, $0, 4
+add  $26, $0, $9
+lui  $28, 0x4000
+addi $28, $28, 90
+Dec:
+beq  $6, $7, Random
+addi $27, $0, 10
+sub  $26, $26, $27
+slt  $27, $26, $0
+beq  $27, $0,  Carry1
+addi $26, $26, 10
+addi $26, $26, 0x30
+lui $27, 0x00ff
+add $27, $26, $27
+sw   $27, 0($28)
+addi $27, $0, 1
+sub  $28, $28, $27
+addi $27, $0, 10
+addi $6, $6, 1
+add  $26, $0, $29
+addi $29, $0, 0
+j Dec
+
+Carry1:
+addi $29, $29, 1
+j Dec
+
+Check:
+lui $4, 0x4000 
+addi $4, $4, 3288
+lui $29, 0x8000 
+addi $3, $0, 0
+addi $30, $0, 0
+
+Get:
+lui $29, 0x8000
+beq $3, $2, PrintScore
+lw  $1, 0($29)
+addi $28, $0, 0x1d
+beq  $1, $28, toW     
+addi $28, $0, 0x1b
+beq  $1, $28, toS
+addi $28, $0, 0x1c
+beq  $1, $28, toA
+addi $28, $0, 0x23
+beq  $1, $28, toD
+lui  $28, 0xe000
+beq  $1, $28, PrintClock
+j Get
+
+toW:
+addi $1, $0, 0
+j Now
+toS:
+addi $1, $0, 1
+j Now
+toA:
+addi $1, $0, 2
+j Now
+toD:
+addi $1, $0, 3
+j Now
+
+YesOrNo:
+beq $1, $26, Yes
+No:
+addi $3, $0, 0
+lui $4, 0x4000 
+addi $4, $4, 3288
+addi $30, $30, 1
+j Now
+
+Yes:
+addi $7, $0, 0xe000
+j Put
+
+Level_up:
+lui  $6, 0x00ff
+lui  $27, 0x4000
+addi $27, $27, 166    #print Level up, press Enter to continue 
+addi $28, $6, 0x4c    #4c 65 76 65 6c 20 75 70 2c 20 70 72 65 73 73 20 45 6e 74 65 72 20 74 6f 20
+sw   $28, 0($27)      #63 6f 6e 74 69 6e 75 65
+addi $27, $27, 1
+addi $28, $6, 0x65                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x76                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x65                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x6c                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x20                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x75                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x70                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x2c                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x20                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x70                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x72                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x65                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x73                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x73                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x20                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x45                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x6e                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x74                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x65                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x72                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x20                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x74                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x6f                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x20                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x63                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x6f                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x6e                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x74                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x69                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x6e                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x75                 
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $28, $6, 0x65                 
+sw   $28, 0($27)
+
+Enter:
+lui $27, 0x8000
+lw  $28, 0($27)
+addi $27, $0, 0x5a
+beq $28, $27, Reput
+j Enter
+
+Reput:
+addi $6, $0, 34
+addi $29,$0, 0
+lui  $27, 0x4000
+addi $27, $27, 166
+lui  $28, 0x00ff
+addi $28, $28, 0xff7f
+ReputAction:
+sw   $28, 0($27)
+addi $27, $27, 1
+addi $29, $29, 1
+beq  $29, $6,  LevelReset 
+j    ReputAction
+
+LevelReset:
+addi $2, $2, 1
+addi $8, $0, 0
+addi $5, $2, 5
+lui  $27, 0xe000
+addi $28, $0, 60
+sw   $28,  0($27)
+j PrintLevel
+
+PrintClock:
+lui  $27, 0xe000
+lw   $28, 0($27)
+beq  $28, $0, GameOver
+addi $27, $0, 10
+addi $6, $0, 0
+ClockCount:
+sub $28, $28, $27
+slt $29, $28, $0
+beq $29, $0, Carry2
+addi $28, $28, 10
+lui  $29, 0x00ff
+addi $6, $6, 0x30
+addi $28, $28, 0x30
+add  $6, $6, $29
+add  $28, $28, $29
+lui $27, 0x4000
+addi $27, $27, 166
+sw $6, 0($27)
+addi $27, $27, 1
+sw $28, 0($27)
+j Get
+
+Carry2:
+addi $6, $6, 1
+j ClockCount
+
+GameOver:
+
+lui  $5, 0x4000
+addi $5, $5, 166    #print Game over, press Enter to restart 
+lui  $6, 0x00ff
+addi $4, $6, 0x47   #47 61 6d 65 20 6f 76 65 72 2c 20 70 72 65 73 73 20 45 6e 74 65 72 20 74 6f 20 72
+sw   $4, 0($5)      #65 73 74 61 72 74
+addi $5, $5, 1
+addi $4, $6, 0x61                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x6d                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x65                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x20                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x6f                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x76                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x65                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x72                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x2c                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x20                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x70                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x72                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x65                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x73                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x73                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x20                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x45                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x6e                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x74                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x65                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x72                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x20                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x74                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x6f                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x20                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x72                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x65                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x73                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x74                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x61                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x72                 
+sw   $4, 0($5)
+addi $5, $5, 1
+addi $4, $6, 0x74                 
+sw   $4, 0($5)
+
+
+
+Restart:
+lui $27, 0x8000
+lw  $28, 0($27)
+addi $27, $0, 0x5a
+beq $28, $27, Start
+j Restart
+
+j  Get                
+
+
